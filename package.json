@@ -3,6 +3,9 @@
   "version": "0.4.0",
   "license": "MIT",
   "description": "React Lottie written with react hooks",
+  "engines": {
+    "node": ">= 12"
+  },
   "keywords": [
     "react",
     "lottie",
