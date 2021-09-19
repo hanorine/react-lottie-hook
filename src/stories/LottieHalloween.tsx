@@ -6,7 +6,7 @@ import "./Lottie.css";
 
 import { useLottie, Lottie, ClickAway, EventListener, Renderer } from "..";
 
-const LottieApp: React.FC = () => {
+const LottieHalloween: React.FC = () => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [animationData] = useState(animationTable[Animation["Hallowin Cat"]] as any);
   const [selected, setOnSelect] = useState<AnimationTitle>(Animation["Hallowin Cat"]);
@@ -130,4 +130,4 @@ const LottieApp: React.FC = () => {
   );
 };
 
-export default LottieApp;
+export default LottieHalloween;
