@@ -31,7 +31,7 @@
     "lint:fix": "yarn lint --quiet --fix",
     "clean": "rm -rf ./dist",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o docs-build -s ./src/stories/assets"
   },
   "files": [
     "dist"
