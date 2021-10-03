@@ -56,7 +56,6 @@ export const defaultRendererSettings = {
 DefaultLottie.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  renderer: PropTypes.oneOf([]).isRequired,
   rendererSettings: PropTypes.object.isRequired,
 };
 

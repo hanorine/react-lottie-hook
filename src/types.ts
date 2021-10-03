@@ -236,3 +236,15 @@ export type AnimationEventTypes =
   | BMAnimationConfigErrorEvent
   // eslint-disable-next-line
   | any;
+
+export type AdditionalProps = {
+  name?: string;
+  path?: string;
+  assets?: any[];
+  animType?: string;
+  frameModifier?: number;
+  initialSegment?: number;
+  autoloadSegments: boolean;
+};
+
+export type AnimationType = (LottieAnimationItem | LottieState) & AdditionalProps;

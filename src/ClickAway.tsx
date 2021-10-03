@@ -28,7 +28,7 @@ export const ClickAway = React.forwardRef<unknown, ClickAwayProps>((props, ref) 
 
   React.useEffect(() => {
     mountedRef.current = true;
-    return (): void => {
+    return () => {
       mountedRef.current = false;
     };
   }, []);
@@ -101,7 +101,7 @@ export const ClickAway = React.forwardRef<unknown, ClickAwayProps>((props, ref) 
       doc.addEventListener(mappedTouchEvent, handleClickAway);
       doc.addEventListener("touchmove", handleTouchMove);
 
-      return (): void => {
+      return () => {
         doc.removeEventListener(mappedTouchEvent, handleClickAway);
         doc.removeEventListener("touchmove", handleTouchMove);
       };
@@ -119,7 +119,7 @@ export const ClickAway = React.forwardRef<unknown, ClickAwayProps>((props, ref) 
 
       doc.addEventListener(mappedMouseEvent, handleClickAway);
 
-      return (): void => {
+      return () => {
         doc.removeEventListener(mappedMouseEvent, handleClickAway);
       };
     }
