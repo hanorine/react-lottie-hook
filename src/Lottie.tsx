@@ -21,7 +21,7 @@ export const Lottie: React.FC<LottieProps> = (props) => {
 
   return (
     <div
-      ref={(r): void => {
+      ref={(r) => {
         props.lottieRef.current = r;
       }}
       className={props.className}

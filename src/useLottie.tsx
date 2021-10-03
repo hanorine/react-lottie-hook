@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import lottie, { AnimationConfigWithData, AnimationItem, AnimationEventName, AnimationDirection } from "lottie-web";
+import lottie, { AnimationConfigWithData, AnimationItem, AnimationEventName } from "lottie-web";
 import {
   LottieAnimationItem,
   AnimationDispatch,
@@ -9,8 +9,10 @@ import {
   Renderer,
   AnimationEventTypes,
   UseLottieState,
+  AnimationType,
 } from "./types";
 import { array, boolean, number, object, string } from "./utils/common";
+import { removeProps } from "./utils/removeProps";
 
 type UseLottie<T extends Renderer = Renderer.svg> = (
   config: LottieConfig<T>,
@@ -266,48 +268,40 @@ export const useLottie: UseLottie = ({
   );
 
   const filterLottieState = useCallback(
-    (anim: LottieAnimationItem | LottieState) => {
-      const updates = {} as Partial<LottieState>;
-      if (string.isPopulated(anim.name)) updates.name = anim.name;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (string.isPopulated(anim.path)) updates.path = anim.path;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (array.isPopulated(anim.assets)) updates.assets = anim.assets;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (string.isPopulated(anim.animType)) updates.animType = anim.animType;
-      if (string.isPopulated(anim.assetsPath)) updates.assetsPath = anim.assetsPath;
-      if (string.isPopulated(anim.animationID)) updates.animationID = anim.animationID;
-      if (number.is(anim.frameMult)) updates.frameMult = anim.frameMult;
-      if (number.is(anim.frameRate)) updates.frameRate = anim.frameRate;
-      if (number.is(anim.playCount)) updates.playCount = anim.playCount;
-      if (number.is(anim.playSpeed)) updates.playSpeed = anim.playSpeed;
-      if (number.is(anim.firstFrame)) updates.firstFrame = anim.firstFrame;
-      if (number.is(anim.segmentPos)) updates.segmentPos = anim.segmentPos;
-      if (number.is(anim.totalFrames)) updates.totalFrames = anim.totalFrames;
-      if (number.is(anim.currentFrame)) updates.currentFrame = anim.currentFrame;
-      if (number.is(anim.timeCompleted)) updates.timeCompleted = anim.timeCompleted;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (number.is(anim.frameModifier)) updates.frameModifier = anim.frameModifier;
-      if (number.is(anim.playDirection)) updates.playDirection = anim.playDirection as AnimationDirection;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (number.is(anim.initialSegment)) updates.initialSegment = anim.initialSegment;
-      if (number.is(anim.currentRawFrame)) updates.currentRawFrame = anim.currentRawFrame;
-      // eslint-disable-next-line
-      // @ts-ignore
-      if (boolean.is(anim.autoloadSegments)) updates.autoloadSegments = anim.autoloadSegments;
-      if (boolean.is(anim.isSubframeEnabled)) updates.isSubframeEnabled = anim.isSubframeEnabled;
-      if (boolean.is(anim.isLoaded)) updates.isLoaded = anim.isLoaded;
-      if (boolean.is(anim.isPaused)) updates.isPaused = anim.isPaused;
-      if (boolean.is(anim.autoplay)) updates.autoplay = anim.autoplay;
-      if (boolean.is(anim.loop)) updates.loop = anim.loop;
-      if (array.isPopulated(anim.segments)) updates.segments = anim.segments;
+    (anim: AnimationType) => {
+      const props = [];
+
+      if (!string.isPopulated(anim.name)) props.push("name");
+      if (!string.isPopulated(anim.path)) props.push("path");
+      if (!string.isPopulated(anim.animType)) props.push("animType");
+      if (!string.isPopulated(anim.assetsPath)) props.push("assetsPath");
+      if (!string.isPopulated(anim.animationID)) props.push("animationID");
+      if (!number.is(anim.frameMult)) props.push("frameMult");
+      if (!number.is(anim.frameRate)) props.push("frameRate");
+      if (!number.is(anim.playCount)) props.push("playCount");
+      if (!number.is(anim.playSpeed)) props.push("playSpeed");
+      if (!number.is(anim.firstFrame)) props.push("firstFrame");
+      if (!number.is(anim.segmentPos)) props.push("segmentPos");
+      if (!number.is(anim.totalFrames)) props.push("totalFrames");
+      if (!number.is(anim.currentFrame)) props.push("currentFrame");
+      if (!number.is(anim.timeCompleted)) props.push("timeCompleted");
+      if (!number.is(anim.frameModifier)) props.push("frameModifier");
+      if (!number.is(anim.playDirection)) props.push("playDirection");
+      if (!number.is(anim.initialSegment)) props.push("initialSegment");
+      if (!number.is(anim.currentRawFrame)) props.push("currentRawFrame");
+      if (!boolean.is(anim.autoloadSegments)) props.push("autoloadSegments");
+      if (!boolean.is(anim.isSubframeEnabled)) props.push("isSubframeEnabled");
+      if (!boolean.is(anim.isLoaded)) props.push("isLoaded");
+      if (!boolean.is(anim.isPaused)) props.push("isPaused");
+      if (!boolean.is(anim.autoplay)) props.push("autoplay");
+      if (!boolean.is(anim.loop)) props.push("loop");
+      if (!array.isPopulated(anim.segments)) props.push("segments");
+      if (!array.isPopulated(anim.assets)) props.push("assets");
+
+      const updates = removeProps(anim, ...props) as Partial<LottieState>;
 
       updates.isStopped = state.isStopped;
+
       return updates;
     },
     [state.isStopped],
@@ -318,7 +312,7 @@ export const useLottie: UseLottie = ({
 
     registerEvents(anim, eventListeners);
 
-    const updates = filterLottieState(anim);
+    const updates = filterLottieState(anim as AnimationType);
     update(updates);
 
     setAnimation(anim);
@@ -356,7 +350,7 @@ export const useLottie: UseLottie = ({
 
       setAnimation(anim);
 
-      const updates = filterLottieState(anim);
+      const updates = filterLottieState(anim as AnimationType);
       update(updates);
     }
   }, [
@@ -376,7 +370,7 @@ export const useLottie: UseLottie = ({
     loop,
   ]);
 
-  const lottieState = filterLottieState(state);
+  const lottieState = filterLottieState(state as AnimationType);
 
   return [lottieRef, lottieState, controls];
 };
