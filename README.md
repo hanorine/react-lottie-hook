@@ -49,7 +49,7 @@ const App = () => {
 };
 ```
 
-Due to [memory leak](https://github.com/airbnb/lottie-web/issues/1933) is advised to deeply clone the animation object using methods such as `lodash.cloneDeep`. 
+Due to likely [memory leaks](https://github.com/airbnb/lottie-web/issues/1933) it is highly advised to deeply clone the animation object using methods such as `lodash.cloneDeep`. 
 
 The exported `Lottie` component has a type of `LottieProps` and the minimum props it requires is a `lottieRef` from the `useLottie` hook.
 
