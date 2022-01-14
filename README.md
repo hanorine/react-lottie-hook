@@ -42,12 +42,14 @@ const App = () => {
       preserveAspectRatio: "xMidYMid slice",
       progressiveLoad: false,
     },
-    animationData,
+    JSON.parse(JSON.stringify(animationData)),
   });
 
   return <Lottie lottieRef={ref} width={400} height={400} />;
 };
 ```
+
+Due to likely [memory leaks](https://github.com/airbnb/lottie-web/issues/1933) it is highly advised to deeply clone the animation object using methods such as `lodash.cloneDeep`. 
 
 The exported `Lottie` component has a type of `LottieProps` and the minimum props it requires is a `lottieRef` from the `useLottie` hook.
 
