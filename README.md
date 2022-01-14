@@ -111,5 +111,8 @@ const [lottieRef, { isPaused, isStopped }, controls] = useLottie({
     <td>
       <a href="https://github.com/ahwelgemoed"><img src="https://avatars1.githubusercontent.com/u/29273599?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Arno (H) Welgemoed</b></sub></a>
     </td>
+    <td align="center">
+      <a href="https://github.com/benitogf"><img src="https://avatars.githubusercontent.com/u/1633813?v=4" width="100px;" alt=""/><br /><sub><b>benito</b></sub></a>
+    </td>
   </tr>
 </table>
